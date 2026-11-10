@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="hi-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Chai ki Tapri — ek cutting, thodi gupshup</title>
+  <meta name="description" content="Chai ki Tapri: ek cutting, ek sutta, thodi gupshup. Bina sign-up anjaan logon se baat karo, private room banao, Ludo ya Saanp-Seedhi khelo.">
+  <meta name="theme-color" content="#b5651d">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Hind:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="#/"><span class="logo-cup">☕</span><span>Chai ki <b>Tapri</b></span></a>
+    <div class="top-right">
+      <button class="pill name-chip" id="nameChip" title="Naam badlo"><span id="myName">…</span><span class="edit">✎</span></button>
+      <button class="pill icon-btn" id="asmrBtn" title="Awaaz on/off" aria-pressed="false">🔇</button>
+    </div>
+  </header>
+
+  <div class="conn-banner" id="connBanner" hidden></div>
+
+  <main id="app">
+    <!-- ===================== TAPRI (home) ===================== -->
+    <section class="view" id="view-home">
+      <div class="home">
+        <div class="stage-card" id="stageCard" data-item="chai">
+          <div class="seg" role="tablist" aria-label="Kya loge?">
+            <button role="tab" data-item="chai" aria-selected="true">☕ Chai</button>
+            <button role="tab" data-item="cig" aria-selected="false">🚬 Sutta</button>
+          </div>
+
+          <!-- chai -->
+          <div class="stage" id="chaiPane">
+            <div class="chai-stage" id="chaiStage">
+              <svg id="chaiSvg" viewBox="0 0 200 240" aria-label="Cutting chai — dabaa ke rakho chuski ke liye" role="img">
+                <defs>
+                  <clipPath id="glassClip"><path d="M54 52 L146 52 L135 206 Q100 214 65 206 Z"/></clipPath>
+                  <linearGradient id="chaiGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#d79a5a"/>
+                    <stop offset="1" stop-color="#8a4a1c"/>
+                  </linearGradient>
+                  <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+                    <stop offset=".25" stop-color="#fff" stop-opacity=".08"/>
+                    <stop offset=".8" stop-color="#fff" stop-opacity=".02"/>
+                    <stop offset="1" stop-color="#fff" stop-opacity=".35"/>
+                  </linearGradient>
+                </defs>
+                <g class="steam" id="steam">
+                  <path d="M86 44 C76 30 96 22 86 6"/>
+                  <path d="M100 46 C90 30 112 22 100 2"/>
+                  <path d="M114 44 C104 30 124 22 114 8"/>
+                </g>
+                <g id="cupTilt">
+                  <g clip-path="url(#glassClip)">
+                    <rect id="chaiFill" x="40" y="70" width="120" height="160" fill="url(#chaiGrad)"/>
+                    <ellipse id="chaiFoam" cx="100" cy="70" rx="48" ry="4" fill="#e9c08d"/>
+                    <g id="rusk" class="rusk">
+                      <rect x="88" y="-60" width="26" height="62" rx="5" fill="#e0a85c" stroke="#b97a31" stroke-width="2"/>
+                      <circle cx="96" cy="-40" r="2" fill="#b97a31"/><circle cx="106" cy="-25" r="2" fill="#b97a31"/><circle cx="97" cy="-12" r="2" fill="#b97a31"/>
+                    </g>
+                  </g>
+                  <path class="glass" d="M54 52 L146 52 L135 206 Q100 214 65 206 Z"/>
+                  <path d="M54 52 L146 52 L135 206 Q100 214 65 206 Z" fill="url(#glassShine)"/>
+                  <g class="facets">
+                    <path d="M70 54 L76 206"/><path d="M86 54 L89 210"/><path d="M100 54 L100 211"/>
+                    <path d="M114 54 L111 210"/><path d="M130 54 L124 206"/>
+                  </g>
+                  <ellipse cx="100" cy="52" rx="46" ry="5" class="rim"/>
+                </g>
+              </svg>
+            </div>
+            <p class="hint" id="chaiHint"><b>Dabaa ke rakho</b> = chuski · <b>Double-tap</b> = rusk dubao</p>
+            <div class="meter"><i id="chaiMeter"></i></div>
+            <button class="btn small" id="refillBtn" hidden>🫖 Ek aur cutting</button>
+          </div>
+
+          <!-- cigarette -->
+          <div class="stage" id="cigPane" hidden>
+            <div class="cig-stage" id="cigStage">
+              <div class="cig-touch" id="cigTouch" aria-label="Virtual cigarette — dabaa ke rakho kash ke liye" role="img">
+                <svg id="cigSvg" viewBox="0 0 360 80">
+                  <defs>
+                    <linearGradient id="cork" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#e9a456"/><stop offset=".5" stop-color="#d4843a"/><stop offset="1" stop-color="#b9692a"/>
+                    </linearGradient>
+                    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f1eee8"/><stop offset="1" stop-color="#d9d4cc"/>
+                    </linearGradient>
+                    <linearGradient id="ashG" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#b8b4ae"/><stop offset=".5" stop-color="#9a9590"/><stop offset="1" stop-color="#77726d"/>
+                    </linearGradient>
+                    <radialGradient id="glowG">
+                      <stop offset="0" stop-color="#ffcf6b" stop-opacity=".95"/>
+                      <stop offset=".35" stop-color="#ff7a1a" stop-opacity=".55"/>
+                      <stop offset="1" stop-color="#ff3d00" stop-opacity="0"/>
+                    </radialGradient>
+                    <pattern id="speck" width="8" height="8" patternUnits="userSpaceOnUse">
+                      <circle cx="2" cy="3" r=".9" fill="#a85a1f" opacity=".5"/><circle cx="6" cy="6" r=".7" fill="#a85a1f" opacity=".4"/>
+                    </pattern>
+                  </defs>
+                  <rect id="cigPaper" x="100" y="28" width="220" height="24" fill="url(#paper)"/>
+                  <rect id="cigAsh" x="320" y="28" width="0" height="24" rx="3" fill="url(#ashG)"/>
+                  <circle id="cigGlow" cx="320" cy="40" r="22" fill="url(#glowG)"/>
+                  <rect id="cigEmber" x="317" y="28" width="6" height="24" rx="2" fill="#ff6a1a"/>
+                  <g id="cigFilter">
+                    <rect x="20" y="28" width="80" height="24" rx="4" fill="url(#cork)"/>
+                    <rect x="20" y="28" width="80" height="24" rx="4" fill="url(#speck)"/>
+                    <rect x="96" y="28" width="4" height="24" fill="#e8c27a"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <p class="hint" id="cigHint"></p>
+            <div class="meter"><i id="cigMeter"></i></div>
+            <button class="btn small" id="newCigBtn" hidden>🔥 Nayi jalao</button>
+          </div>
+
+          <canvas id="smokeCanvas" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="chat-card">
+          <div class="room-chips" id="roomChips" role="tablist" aria-label="Tapri chuno"></div>
+          <div class="chat-meta">
+            <span class="muted small" id="pubSub"></span>
+            <span class="count" id="pubCount"></span>
+          </div>
+          <ul class="messages" id="pubMsgs"></ul>
+          <form class="composer" id="pubForm" autocomplete="off">
+            <button type="button" class="emoji-btn" data-target="pubInput" aria-label="Emoji">😊</button>
+            <input id="pubInput" maxlength="400" placeholder="Tapri pe kuch bolo…" enterkeyhint="send">
+            <button class="send" aria-label="Bhejo">➤</button>
+          </form>
+        </div>
+      </div>
+
+      <details class="rules">
+        <summary>Tapri ke niyam 🙏</summary>
+        <ul>
+          <li>Izzat se baat karo — gaali apne aap chhup jaati hai.</li>
+          <li>Links aur phone number public mein apne aap chhup jaate hain. Personal info share mat karo.</li>
+          <li>Koi account, koi server nahi — baat seedhe browser se browser hoti hai.</li>
+          <li>Sutta sirf virtual hai. Asli wali se door hi raho 🚭</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- ===================== PRIVATE ROOM ===================== -->
+    <section class="view" id="view-temp" hidden>
+      <div class="simple-lobby" id="tempLobby">
+        <h1>Private room 🔐</h1>
+        <p class="muted">Room banao, code dosto ko bhejo. Sab nikle to room gayab.</p>
+        <button class="btn primary big" id="createRoomBtn">☕ Naya room banao</button>
+        <p class="form-err" id="createErr"></p>
+        <div class="or"><span>ya code daalo</span></div>
+        <form id="joinForm" autocomplete="off">
+          <div class="code-inputs" id="codeInputs">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 1">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 2">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 3">
+            <input inputmode="numeric" maxlength="1" aria-label="Digit 4">
+          </div>
+          <button class="btn big" id="joinBtn">Andar aao →</button>
+          <p class="form-err" id="joinErr"></p>
+        </form>
+      </div>
+
+      <div class="chat-view temp-room" id="tempRoom" hidden>
+        <div class="chat-head">
+          <button class="back" id="tempLeaveBtn" aria-label="Room chhodo">✕</button>
+          <div class="chat-title">
+            <b>Room <span class="code-badge" id="tempCode">----</span></b>
+            <span class="muted small" id="tempMembers">…</span>
+          </div>
+          <button class="pill" id="copyLinkBtn" title="Link share karo">🔗 Share</button>
+          <button class="pill" id="lockBtn" title="Room lock/unlock" hidden>🔓</button>
+        </div>
+        <ul class="messages" id="tempMsgs"></ul>
+        <div class="typing" id="tempTyping"></div>
+        <form class="composer" id="tempForm" autocomplete="off">
+          <button type="button" class="emoji-btn" data-target="tempInput" aria-label="Emoji">😊</button>
+          <input id="tempInput" maxlength="1000" placeholder="Message likho…" enterkeyhint="send">
+          <button class="send" aria-label="Bhejo">➤</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ===================== GAMES ===================== -->
+    <section class="view" id="view-games" hidden>
+      <div class="simple-lobby" id="gameLobby">
+        <h1>Khel 🎲</h1>
+        <div class="game-pick">
+          <button class="game-tile ludo-tile" data-game="ludo"><span class="gt-art">🎲</span><b>Ludo</b></button>
+          <button class="game-tile snl-tile" data-game="snl"><span class="gt-art">🐍</span><b>Saanp-Seedhi</b></button>
+        </div>
+        <div class="mode-pick" id="modePick" hidden>
+          <p class="mode-title" id="modeTitle">Kiske saath?</p>
+          <button class="mode" data-mode="online"><span>🌏</span><b>Online</b><small>kisi anjaan ke saath</small></button>
+          <button class="mode" data-mode="bot"><span>🤖</span><b>Computer</b><small>abhi turant</small></button>
+          <div class="mode local-mode"><span>📱</span><b>Ek phone pe</b>
+            <div class="nums"><button data-local="2">2</button><button data-local="3">3</button><button data-local="4">4</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="waiting" id="gameWaiting" hidden>
+        <div class="kettle">🫖</div>
+        <h2 id="waitTitle">Khiladi dhoond rahe hain…</h2>
+        <p class="muted" id="waitInfo">Chai ubal rahi hai…</p>
+        <div class="wait-actions">
+          <button class="btn" id="waitBotBtn">🤖 Computer se khelo</button>
+          <button class="btn ghost" id="waitCancelBtn">Rehne do</button>
+        </div>
+      </div>
+
+      <div class="game" id="gameScreen" hidden>
+        <div class="game-top">
+          <button class="back" id="gameLeaveBtn" aria-label="Game chhodo">←</button>
+          <b id="gameTitle">Ludo</b>
+          <div class="players" id="gamePlayers"></div>
+        </div>
+        <div class="game-body">
+          <div class="board-wrap">
+            <svg id="board" class="board"></svg>
+            <div class="toast" id="gameToast" hidden></div>
+            <div class="over" id="gameOver" hidden>
+              <div class="over-card">
+                <div class="trophy">🏆</div>
+                <h2 id="overTitle">Jeet gaye!</h2>
+                <p class="muted" id="overSub"></p>
+                <div class="wait-actions">
+                  <button class="btn primary" id="againBtn">🔁 Phir se</button>
+                  <button class="btn ghost" id="overExitBtn">Band karo</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="side">
+            <div class="dice-zone">
+              <button class="dice" id="diceBtn" aria-label="Dice phenko" disabled><span class="face" id="diceFace"></span></button>
+              <div class="turn-info">
+                <p id="gameStatus">…</p>
+                <div class="timer"><i id="turnTimer"></i></div>
+              </div>
+            </div>
+            <div class="gchat">
+              <ul id="gChatList"></ul>
+              <div class="quick" id="quickEmoji">
+                <button>😂</button><button>🔥</button><button>😭</button><button>👏</button><button>🐍</button><button>🙏</button><button>☕</button>
+              </div>
+              <form class="composer small" id="gChatForm" autocomplete="off">
+                <input id="gChatInput" maxlength="140" placeholder="Khiladiyon se baat…" enterkeyhint="send">
+                <button class="send" aria-label="Bhejo">➤</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar" aria-label="Sections">
+    <a href="#/" data-tab="home"><span>☕</span>Tapri</a>
+    <a href="#/room" data-tab="temp"><span>🔐</span>Private<i class="badge" id="tempBadge" hidden></i></a>
+    <a href="#/khel" data-tab="games"><span>🎲</span>Khel</a>
+  </nav>
+
+  <dialog id="nameDialog">
+    <form method="dialog" id="nameForm">
+      <h3>Tapri pe aapka naam</h3>
+      <input id="nameInput" maxlength="20" required>
+      <p class="form-err" id="nameErr"></p>
+      <div class="dlg-actions">
+        <button type="button" class="btn ghost" id="nameRandom">🎲 Random</button>
+        <button type="button" class="btn ghost" id="nameCancel">Rehne do</button>
+        <button class="btn primary" value="save">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="emoji-pop" id="emojiPop" hidden></div>
+  <div class="snack" id="snack" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/peerjs/1.5.4/peerjs.min.js"></script>
+  <script src="/js/filter.js"></script>
+  <script src="/js/p2p.js"></script>
+  <script src="/js/engine.js"></script>
+  <script src="/js/chai.js"></script>
+  <script src="/js/smoke.js"></script>
+  <script src="/js/boards.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
